@@ -1,0 +1,663 @@
+/* ═══════════════════════════════════════════════════════════════
+   VINTAGE WARM — style.css
+   Czcionka: JetBrains Mono (monospace / terminal feel)
+   Paleta: kremowe tła, ciepłe brązy, oranż, pergaminowe akcenty
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ── Reset ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Design tokens ────────────────────────────────────────────── */
+:root {
+    /* Paleta ciepłych, vintage kolorów */
+    --bg:           #f5ede0;        /* kremowe, ciepłe tło */
+    --bg-alt:       #ede0cc;        /* nieco ciemniejszy pergamin */
+    --surface:      #faf3e8;        /* karty, aside */
+    --surface-dark: #e8d5b5;        /* nagłówki tabel, hover */
+
+    --accent:       #c0622a;        /* głęboki oranż – główny akcent */
+    --accent-light: #e07b40;        /* jaśniejszy oranż – hover */
+    --accent-muted: #8b4513;        /* ciemny brąz – obramowania */
+
+    --text:         #2e1e0f;        /* bardzo ciemny brąz – główny tekst */
+    --text-muted:   #6b4c30;        /* wyciszony brąz – opisy */
+    --border:       #c4956a;        /* ciepły beż-brąz – krawędzie */
+
+    /* Typografia */
+    --font-mono:    'JetBrains Mono', 'Courier Prime', 'Courier New', monospace;
+
+    /* Odstępy */
+    --sp-xs: 0.4rem;
+    --sp-sm: 0.75rem;
+    --sp-md: 1rem;
+    --sp-lg: 2rem;
+    --sp-xl: 3rem;
+
+    /* Border-radius – lekko zaokrąglony, nie okrągły */
+    --radius: 4px;
+}
+
+/* ── Base ─────────────────────────────────────────────────────── */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text);
+    background-color: var(--bg);
+
+    /* Subtelna tekstura – wygląda jak stary papier */
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 28px,
+            rgba(160, 110, 60, 0.06) 28px,
+            rgba(160, 110, 60, 0.06) 29px
+        );
+
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 var(--sp-md);
+}
+
+/* ── Typografia ───────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--sp-sm);
+}
+
+h1 {
+    font-size: 2rem;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: var(--sp-xs);
+    margin-bottom: var(--sp-md);
+}
+
+h2 { font-size: 1.45rem; }
+h3 { font-size: 1.2rem;  }
+
+p {
+    margin-bottom: var(--sp-md);
+    color: var(--text);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent-light);
+    transition: color 0.2s, border-color 0.2s;
+}
+
+a:hover {
+    color: var(--accent-light);
+    border-bottom-color: var(--accent-light);
+}
+
+ul, ol {
+    padding-left: var(--sp-lg);
+    margin-bottom: var(--sp-md);
+}
+
+li {
+    margin-bottom: var(--sp-xs);
+}
+
+/* ── Header ───────────────────────────────────────────────────── */
+header {
+    background-color: var(--accent-muted);
+    padding: var(--sp-sm) var(--sp-lg);
+    border-bottom: 3px solid var(--accent);
+
+    /* Delikatny shadow nadający głębi */
+    box-shadow: 0 3px 10px rgba(46, 30, 15, 0.25);
+
+    /* Przyklejony na górze przy scrollowaniu */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* ── Nav ──────────────────────────────────────────────────────── */
+nav {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    flex-wrap: wrap;
+}
+
+/* Prefix w stylu terminala przed logo/tytułem */
+nav::before {
+    content: "> _";
+    color: var(--accent-light);
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-right: var(--sp-sm);
+}
+
+/* Linki w nav mogą być zarówno <a> jak i <ul li a> */
+nav a,
+nav ul li a {
+    display: inline-block;
+    color: var(--bg);
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: var(--sp-xs) var(--sp-sm);
+    border-radius: var(--radius);
+    border-bottom: none;
+    letter-spacing: 0.04em;
+    text-transform: capitalize;
+    transition: background 0.18s, color 0.18s;
+}
+
+nav a:hover,
+nav ul li a:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: var(--sp-sm);
+    margin: 0;
+}
+
+/* Hello, username – pcha się do prawej krawędzi nava */
+nav span {
+    margin-left: auto;
+    color: #eba613;
+    font-weight: 700;
+    opacity: 0.75;
+    align-self: center;
+    letter-spacing: 0.03em;
+}
+
+/* ── Main / layout ────────────────────────────────────────────── */
+main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-lg);
+    padding: var(--sp-lg) 0;
+}
+
+article {
+    flex: 1;
+}
+
+/* ── Aside ────────────────────────────────────────────────────── */
+aside {
+    flex: 0 0 240px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: var(--sp-md) var(--sp-lg);
+    color: var(--text);
+    box-shadow: 2px 2px 8px rgba(139, 69, 19, 0.1);
+}
+
+/* ── Footer ───────────────────────────────────────────────────── */
+footer {
+    border-top: 2px solid var(--border);
+    padding: var(--sp-md);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    margin-top: var(--sp-xl);
+}
+
+
+
+/* ── Tabela ───────────────────────────────────────────────────── */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: var(--sp-lg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    font-size: 0.92rem;
+}
+
+thead {
+    background: var(--surface-dark);
+    color: var(--accent-muted);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+th, td {
+    padding: var(--sp-sm) var(--sp-md);
+    text-align: left;
+}
+
+tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+}
+
+tbody tr:hover {
+    background: var(--bg-alt);
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* ── Formularze ───────────────────────────────────────────────── */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+    max-width: 480px;
+    margin-bottom: var(--sp-lg);
+}
+
+label {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--sp-sm) var(--sp-md);
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(192, 98, 42, 0.18);
+}
+
+/* ── Przyciski ────────────────────────────────────────────────── */
+button,
+input[type="submit"] {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: var(--sp-sm) var(--sp-lg);
+    border-radius: var(--radius);
+    border: 2px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    transition: background 0.18s, transform 0.12s;
+    align-self: flex-start;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background: var(--accent-light);
+    border-color: var(--accent-light);
+    transform: translateY(-1px);
+}
+
+button:active,
+input[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* ── Przycisk Log Out – fixed w prawym dolnym rogu ────────────── */
+footer form button {
+    position: fixed;
+    bottom: 1.2rem;
+    right: 1.2rem;
+    z-index: 200;
+    font-size: 0.72rem;
+    padding: 0.3rem 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--accent-muted);
+    border-color: var(--accent-muted);
+    opacity: 0.75;
+    align-self: auto;
+    transition: opacity 0.2s, background 0.18s, transform 0.12s;
+}
+
+footer form button:hover {
+    opacity: 1;
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+/* ── Card grid (projekty) ─────────────────────────────────────── */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--sp-md);
+    margin-bottom: var(--sp-lg);
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: var(--sp-md) var(--sp-lg);
+    box-shadow: 2px 4px 10px rgba(139, 69, 19, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 3px 8px 18px rgba(139, 69, 19, 0.16);
+}
+
+.card h3 {
+    margin-bottom: var(--sp-xs);
+}
+
+/* ── Projekt lista ────────────────────────────────────────────── */
+main ul {
+    list-style: none;
+    padding: 0;
+}
+
+main ul li {
+    padding: var(--sp-xs) var(--sp-sm);
+    border-left: 3px solid var(--border);
+    margin-bottom: var(--sp-xs);
+    transition: border-color 0.2s, background 0.2s;
+    border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+main ul li:hover {
+    border-left-color: var(--accent);
+    background: var(--bg-alt);
+}
+
+/* ── Cursor blink – retro terminal detail ─────────────────────── */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+h1::after {
+    content: "█";
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-left: 4px;
+    animation: blink 1.2s step-end infinite;
+    vertical-align: middle;
+}
+
+/* ── Utility: muted text ──────────────────────────────────────── */
+.text-muted {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BLOG — post-detail & post-list
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Blog list layout: aside + section obok siebie ───────────── */
+#blog-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--sp-lg);
+    align-items: start;
+}
+
+/* aside z kategoriami nie ma osobnego id, więc globalny aside
+   na stronie blog-list zachowuje się poprawnie dzięki flex w main.
+   Poniższe selektory celują w konkretne sekcje blogu. */
+
+/* ── Post-list: pojedynczy artykuł w liście ───────────────────── */
+section > article {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: var(--sp-md) var(--sp-lg);
+    margin-bottom: var(--sp-md);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+section > article:hover {
+    box-shadow: 3px 6px 16px rgba(139, 69, 19, 0.13);
+    transform: translateX(3px);
+}
+
+section > article h2 {
+    margin-bottom: var(--sp-xs);
+    font-size: 1.2rem;
+}
+
+section > article h2 a {
+    border-bottom: none;
+    color: var(--accent);
+}
+
+section > article h2 a:hover {
+    color: var(--accent-light);
+}
+
+section > article small {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--sp-sm);
+}
+
+/* ── Post-detail: główny artykuł ──────────────────────────────── */
+main > article {
+    max-width: 720px;
+}
+
+main > article h1 {
+    margin-bottom: var(--sp-xs);
+}
+
+main > article > small {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-xs) var(--sp-md);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--sp-lg);
+    padding-bottom: var(--sp-sm);
+    border-bottom: 1px dashed var(--border);
+}
+
+/* p wewnątrz <small> (views count) */
+main > article > small p {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+main > article > div {
+    line-height: 1.85;
+    color: var(--text);
+}
+
+/* linebreaks generuje <p> — ładne akapity */
+main > article > div p {
+    margin-bottom: var(--sp-md);
+}
+
+/* ── Sekcja komentarzy ────────────────────────────────────────── */
+#comments {
+    margin-top: var(--sp-xl);
+    padding-top: var(--sp-lg);
+    border-top: 2px solid var(--border);
+    max-width: 720px;
+}
+
+#comments h2 {
+    margin-bottom: var(--sp-md);
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+}
+
+/* Pojedynczy komentarz */
+.comment {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--sp-sm) var(--sp-md);
+    margin-bottom: var(--sp-sm);
+    position: relative;
+}
+
+/* Pionowa kreska po lewej – jak cytat */
+.comment::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent-muted);
+    border-radius: var(--radius) 0 0 var(--radius);
+    opacity: 0.5;
+}
+
+.comment strong {
+    display: inline-block;
+    color: var(--accent-muted);
+    font-size: 0.88rem;
+    margin-right: var(--sp-sm);
+}
+
+.comment small {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+}
+
+.comment p {
+    margin: var(--sp-xs) 0 0;
+    font-size: 0.92rem;
+}
+
+/* ── Formularz dodawania komentarza ──────────────────────────── */
+#add-comment {
+    margin-top: var(--sp-xl);
+    padding-top: var(--sp-lg);
+    border-top: 1px dashed var(--border);
+    max-width: 560px;
+}
+
+#add-comment h2 {
+    margin-bottom: var(--sp-md);
+}
+
+/* Django renderuje każde pole w <div> */
+#add-comment form > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+    margin-bottom: var(--sp-sm);
+}
+
+/* errorlist z Django */
+.errorlist {
+    list-style: none;
+    padding: 0;
+    margin: var(--sp-xs) 0 0;
+}
+
+.errorlist li {
+    color: #a83222;
+    background: #fde8e4;
+    border: 1px solid #e8a99a;
+    border-radius: var(--radius);
+    padding: var(--sp-xs) var(--sp-sm);
+    font-size: 0.82rem;
+    margin-bottom: 0;
+}
+
+/* ── Link powrotny "← All Posts" ─────────────────────────────── */
+main > p:last-child {
+    margin-top: var(--sp-lg);
+    padding-top: var(--sp-md);
+    border-top: 1px solid var(--border);
+    font-size: 0.88rem;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+        padding: 0 var(--sp-sm);
+    }
+
+    main {
+        flex-direction: column;
+        padding: var(--sp-md) 0;
+    }
+
+    aside {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    nav {
+        gap: var(--sp-xs);
+    }
+
+    nav::before {
+        display: none;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: var(--sp-xs);
+    }
+
+    .nav-auth {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: var(--sp-sm);
+    }
+
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; }
+
+    form {
+        max-width: 100%;
+    }
+}
